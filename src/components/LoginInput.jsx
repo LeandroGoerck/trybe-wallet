@@ -5,8 +5,14 @@ class Logininput extends Component {
   render() {
     const { testID, type, placeholder, id, value, handleChange } = this.props;
     return (
-      <div className="w- max-w-xs">
+      <div className="w- max-w-xs ">
         <div className="mb-4">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor={ id }
+          >
+            { type.charAt(0).toUpperCase() + type.slice(1) }
+          </label>
           <input
             className="shadow appearance-none border rounded w-full py-2
             px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
