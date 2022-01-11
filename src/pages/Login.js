@@ -71,7 +71,9 @@ class Login extends React.Component {
 
 Login.propTypes = {
   // bbuttonDisable: PropTypes.bool.isRequired,
-  history: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 export default Login;

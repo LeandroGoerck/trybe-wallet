@@ -36,9 +36,11 @@ const mapDispatchToProps = (dispatch) => ({
 
 Loginbutton.propTypes = {
   buttonDisable: PropTypes.bool.isRequired,
-  addEmail: PropTypes.string.isRequired,
+  addEmail: PropTypes.func.isRequired,
   email: PropTypes.string.isRequired,
-  // history: PropTypes.objectOf().isRequired
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Loginbutton);
