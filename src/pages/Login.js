@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Loginbutton from '../components/Loginbutton';
 import Logininput from '../components/LoginInput';
+import Title from '../components/Title';
 
 class Login extends React.Component {
   constructor(props) {
@@ -36,35 +37,45 @@ class Login extends React.Component {
     const { buttonDisable, email, password } = this.state;
     const { history } = this.props;
     return (
-      <div className="w-full h-screen flex flex-col items-center justify-center">
-        <div className="w-full max-w-xs">
-          <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-            <div className="mb-4">
-              <Logininput
-                testID="email-input"
-                type="email"
-                placeholder="alguem@alguem.com"
-                id="email"
-                value={ email }
-                handleChange={ this.handleChange }
-              />
-              <Logininput
-                testID="password-input"
-                type="password"
-                placeholder="*******"
-                id="password"
-                value={ password }
-                handleChange={ this.handleChange }
-              />
-            </div>
+      <div className="h-full w-full flex flex-col items-center justify-center">
+        <div
+          className="flex flex-row items-center justify-evenly border pl-24 shadow-2xl
+          relative"
+        >
+          <Title />
+          <form
+            className="bg-white shadow-2xl rounded px-12 pt-6 pb-8 mb-4 mr-28 flex
+              flex-col items-center"
+          >
+            <Logininput
+              testID="email-input"
+              type="email"
+              placeholder="alguem@alguem.com"
+              id="email"
+              value={ email }
+              handleChange={ this.handleChange }
+            />
+            <Logininput
+              testID="password-input"
+              type="password"
+              placeholder="*******"
+              id="password"
+              value={ password }
+              handleChange={ this.handleChange }
+            />
             <Loginbutton
               email={ email }
               buttonDisable={ buttonDisable }
               history={ history }
             />
           </form>
+          <img
+            src="https://image.freepik.com/free-vector/savings-background-design_1270-10.jpg"
+            alt="wallet"
+          />
         </div>
       </div>
+
     );
   }
 }

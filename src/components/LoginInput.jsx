@@ -14,7 +14,7 @@ class Logininput extends Component {
             { type.charAt(0).toUpperCase() + type.slice(1) }
           </label>
           <input
-            className="shadow appearance-none border rounded w-full py-2
+            className="shadow appearance-none border rounded w-80 py-2
             px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             data-testid={ testID }
             type={ type }
