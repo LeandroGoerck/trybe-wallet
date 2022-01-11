@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { AiFillCheckCircle } from 'react-icons/ai';
 
 class Logininput extends Component {
   render() {
-    const { testID, type, placeholder, id, value, handleChange } = this.props;
+    const { testID, type, placeholder, id, value, handleChange, enableCheckIcon,
+    } = this.props;
     return (
-      <div className="w- max-w-xs ">
+      <div className="max-w-xs relative">
         <div className="mb-4">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
@@ -24,6 +26,11 @@ class Logininput extends Component {
             onChange={ (event) => handleChange(event) }
           />
         </div>
+        <AiFillCheckCircle
+          className={ enableCheckIcon
+            ? 'absolute top-10 right-2 z-10 text-green-500'
+            : 'absolute top-10 right-2 z-10 text-red-500 opacity-50' }
+        />
       </div>
     );
   }
@@ -36,6 +43,7 @@ Logininput.propTypes = {
   id: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
+  enableCheckIcon: PropTypes.bool.isRequired,
 };
 
 export default Logininput;

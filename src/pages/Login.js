@@ -12,14 +12,34 @@ class Login extends React.Component {
       email: '',
       password: '',
       buttonDisable: true,
+      enableEmail: false,
+      enablePassword: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.checkInput = this.checkInput.bind(this);
+    this.validateCheck = this.validateCheck.bind(this)
   }
 
   handleChange(event) {
     const { value, id } = event.target;
     this.setState({ [id]: value }, () => this.checkInput());
+  }
+
+  validateCheck() {
+    const validation = /\S+@\S+\.\S+/;
+    const MIN = 6;
+    const { email, password } = this.state;
+    if (validation.test(email)) {
+      this.setState({ enableEmail: true});
+    } else {
+      this.setState({ enableEmail: false});
+    }
+
+    if (MIN <= password.length) {
+      this.setState({ enablePassword: true});
+    } else {
+      this.setState({ enablePassword: false});
+    }
   }
 
   checkInput() {
@@ -31,10 +51,11 @@ class Login extends React.Component {
     } else {
       this.setState({ buttonDisable: true });
     }
+    this.validateCheck();
   }
 
   render() {
-    const { buttonDisable, email, password } = this.state;
+    const { buttonDisable, email, password, enableEmail, enablePassword } = this.state;
     const { history } = this.props;
     return (
       <div className="h-full w-full flex flex-col items-center justify-center">
@@ -54,6 +75,7 @@ class Login extends React.Component {
               id="email"
               value={ email }
               handleChange={ this.handleChange }
+              enableCheckIcon={ enableEmail }
             />
             <Logininput
               testID="password-input"
@@ -62,6 +84,7 @@ class Login extends React.Component {
               id="password"
               value={ password }
               handleChange={ this.handleChange }
+              enableCheckIcon={ enablePassword }
             />
             <Loginbutton
               email={ email }
