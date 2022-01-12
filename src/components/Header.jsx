@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 class Header extends Component {
   render() {
+    const { user } = this.props;
+    const { email } = user;
+    console.log(email);
     return (
       <div
         className="h-20 bg-white-200 border-b-green-500 flex flex-row shadow-xl
@@ -21,7 +26,7 @@ class Header extends Component {
             data-testid="email-field"
             className="p-10 text-yellow-400"
           >
-            alguem@gmail.com
+            {email}
           </span>
           <span className="text-green-500 mr-2">
             Despesa total:
@@ -37,5 +42,12 @@ class Header extends Component {
     );
   }
 }
+const mapStateToProps = (state) => (state);
 
-export default Header;
+Header.propTypes = {
+  user: PropTypes.shape({
+    email: PropTypes.string.isRequired,
+  }).isRequired,
+};
+
+export default connect(mapStateToProps)(Header);

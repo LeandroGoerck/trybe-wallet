@@ -1,12 +1,6 @@
 // Esse reducer será responsável por tratar as informações da pessoa usuária
 const INIT = {
-  user: {
-    email: '',
-  },
-  wallet: {
-    currencies: [],
-    expenses: [],
-  },
+  email: '',
   enableButton: false,
 };
 
