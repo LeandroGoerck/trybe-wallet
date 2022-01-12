@@ -17,7 +17,7 @@ class Login extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.checkInput = this.checkInput.bind(this);
-    this.validateCheck = this.validateCheck.bind(this)
+    this.validateCheck = this.validateCheck.bind(this);
   }
 
   handleChange(event) {
@@ -30,15 +30,15 @@ class Login extends React.Component {
     const MIN = 6;
     const { email, password } = this.state;
     if (validation.test(email)) {
-      this.setState({ enableEmail: true});
+      this.setState({ enableEmail: true });
     } else {
-      this.setState({ enableEmail: false});
+      this.setState({ enableEmail: false });
     }
 
     if (MIN <= password.length) {
-      this.setState({ enablePassword: true});
+      this.setState({ enablePassword: true });
     } else {
-      this.setState({ enablePassword: false});
+      this.setState({ enablePassword: false });
     }
   }
 
