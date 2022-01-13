@@ -25,8 +25,23 @@ class Form extends Component {
       tag: '',
       description: '',
       // exchangeRates: {},
+      currencies: [],
     };
     this.handleChange = this.handleChange.bind(this);
+    this.getCurrencies = this.getCurrencies.bind(this);
+  }
+
+  componentDidMount() {
+    this.getCurrencies();
+  }
+
+  getCurrencies() {
+    fetch('https://economia.awesomeapi.com.br/json/all')
+      .then((response) => response.json())
+      .then((data) => {
+        delete data.USDT;
+        this.setState({ currencies: Object.keys(data) });
+      });
   }
 
   handleChange(event) {
@@ -38,8 +53,9 @@ class Form extends Component {
   render() {
     // const { value, currency, method, tag, description,
     //   exchangeRates, addExpense } = this.props;
-    const { value, currency, method, tag, description } = this.state;
+    const { value, currency, method, tag, description, currencies } = this.state;
     const { addExpense } = this.props;
+    const { getCurrencies } = this;
 
     return (
       <div
@@ -106,11 +122,12 @@ class Form extends Component {
             value={ currency }
             onChange={ this.handleChange }
           >
-            <option value="BRL">BRL</option>
+            {currencies.map((cur) => (<option key={ cur } value={ cur }>{cur}</option>))}
+            {/* <option value="BRL">BRL</option>
             <option value="USD">USD</option>
             <option value="ARS">ARS</option>
             <option value="BTC">BTC</option>
-            <option value="ETH">ETH</option>
+            <option value="ETH">ETH</option> */}
           </select>
 
           <select
@@ -157,6 +174,7 @@ class Form extends Component {
             onClick={ () => {
               // addExpense([{ expenses: { id: 'id', value: 'value', currency: 'currency' } }]);
               addExpense(tesObj);
+              getCurrencies();
             } }
           >
             <IoIosAddCircle
