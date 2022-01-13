@@ -29,7 +29,7 @@ class Loginbutton extends Component {
   }
 }
 
-const mapStateToProps = (state) => (state);
+// const mapStateToProps = (state) => (state);
 const mapDispatchToProps = (dispatch) => ({
   addEmail: (userInfo) => dispatch(ACT.addEmail(userInfo)),
 });
@@ -43,4 +43,4 @@ Loginbutton.propTypes = {
   }).isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Loginbutton);
+export default connect(null, mapDispatchToProps)(Loginbutton);

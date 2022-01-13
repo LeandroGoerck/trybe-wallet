@@ -2,18 +2,29 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { IoIosAddCircle } from 'react-icons/io';
 import { connect } from 'react-redux';
+import * as ACT from '../actions';
+
+const tesObj = {
+  id: 0,
+  value: '10',
+  currency: 'USD',
+  method: 'Cartão de crédito',
+  tag: 'Lazer',
+  description: 'Dez dólares',
+  exchangeRates: 'mockData',
+};
 
 class Form extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: '1',
+      // id: 0 ,
       value: '',
       currency: '',
       method: '',
       tag: '',
       description: '',
-      exchangeRates: {},
+      // exchangeRates: {},
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -25,8 +36,11 @@ class Form extends Component {
   }
 
   render() {
-    const { value, currency, method, tag, description,
-      exchangeRates } = this.props;
+    // const { value, currency, method, tag, description,
+    //   exchangeRates, addExpense } = this.props;
+    const { value, currency, method, tag, description } = this.state;
+    const { addExpense } = this.props;
+
     return (
       <div
         className="h-20 bg-white-200 border-b-green-500 flex flex-row shadow-xl
@@ -92,7 +106,7 @@ class Form extends Component {
             value={ currency }
             onChange={ this.handleChange }
           >
-            <option selected value="BRL">BRL</option>
+            <option value="BRL">BRL</option>
             <option value="USD">USD</option>
             <option value="ARS">ARS</option>
             <option value="BTC">BTC</option>
@@ -112,7 +126,7 @@ class Form extends Component {
             value={ method }
             onChange={ this.handleChange }
           >
-            <option selected value="Dinheiro">Dinheiro</option>
+            <option value="Dinheiro">Dinheiro</option>
             <option value="Cartão de crédito">Cartão de crédito</option>
             <option value="Cartão de débito">Cartão de débito</option>
           </select>
@@ -141,7 +155,8 @@ class Form extends Component {
             className="h-full "
             type="button"
             onClick={ () => {
-              console.log('clicou');
+              // addExpense([{ expenses: { id: 'id', value: 'value', currency: 'currency' } }]);
+              addExpense(tesObj);
             } }
           >
             <IoIosAddCircle
@@ -155,13 +170,20 @@ class Form extends Component {
   }
 }
 
+const mapDispatchToProps = (dispatch) => ({
+  addExpense: (payload) => dispatch(ACT.addExpense(payload)),
+});
+
 Form.propTypes = {
   // bbuttonDisable: PropTypes.bool.isRequired,
-  value: PropTypes.string.isRequired,
-  currency: PropTypes.string.isRequired,
-  method: PropTypes.string.isRequired,
-  tag: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
+  // value: PropTypes.number.isRequired,
+  // currency: PropTypes.string.isRequired,
+  // method: PropTypes.string.isRequired,
+  // tag: PropTypes.string.isRequired,
+  // description: PropTypes.string.isRequired,
+  // addExpense: PropTypes.func.isRequired,
+  // exchangeRates: PropTypes.string.isRequired,
+  addExpense: PropTypes.func.isRequired,
 };
 
-export default connect(null, null)(Form);
+export default connect(null, mapDispatchToProps)(Form);

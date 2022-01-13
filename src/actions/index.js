@@ -1,14 +1,12 @@
 // Coloque aqui suas actions
-const ADD_NAME = 'ADD_NAME';
-const ADD_EMAIL = 'ADD_EMAIL';
-const ADD_USER = 'ADD_USER';
 
-const addName = (name) => ({ type: ADD_NAME, payload: name });
+export const ADD_EMAIL = 'ADD_EMAIL';
+export const ADD_EXPENSE = 'ADD_EXPENSE';
+
 const addEmail = (email) => ({ type: ADD_EMAIL, payload: email });
-const addUser = (email) => ({ type: ADD_USER, payload: email });
+const addExpense = (payload) => ({ type: ADD_EXPENSE, payload });
 
 export {
   addEmail,
-  addName,
-  addUser,
+  addExpense,
 };
