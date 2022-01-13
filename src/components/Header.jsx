@@ -6,10 +6,9 @@ class Header extends Component {
   render() {
     const { user } = this.props;
     const { email } = user;
-    console.log(email);
     return (
       <div
-        className="h-20 bg-white-200 border-b-green-500 flex flex-row shadow-xl
+        className="h-20 bg-white-200 border-b-green-500 flex flex-row border
         items-center space-x-5 place-content-between"
       >
         <div
