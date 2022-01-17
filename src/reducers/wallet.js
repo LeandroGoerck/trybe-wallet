@@ -1,18 +1,20 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
+// reducers/wallet
+
 import * as ACT from '../actions';
 
 const INIT = {
   expenses: [],
+  total: 0,
 };
 
-// const aADD_EXPENSE = 'ADD_EXPENSE';
-
+// wallet reducer
 const wallet = (state = INIT, action) => {
-  // const { id, value, currency, method, tag, description, exchangeRates } = action;
   const { payload } = action;
   switch (action.type) {
-  case ACT.ADD_EXPENSE:
-    console.log(state.expenses.length);
+  case ACT.REQUEST_EXCHANGE_RATES:
+    return state;
+  case ACT.ADD_EXCHANGE_RATES:
     return ({ ...state,
       expenses: [
         ...state.expenses, {
@@ -20,7 +22,11 @@ const wallet = (state = INIT, action) => {
           id: state.expenses.length,
         },
       ],
-      status: '' });
+      total: 111,
+    });
+  case ACT.ADD_TOTAL_VALUE:
+    state.total = payload.toFixed(2);
+    return { ...state };
   default:
     return state;
   }

@@ -6,6 +6,8 @@ class Header extends Component {
   render() {
     const { user } = this.props;
     const { email } = user;
+    const { wallet } = this.props;
+    const { total } = wallet;
     return (
       <div
         className="h-20 bg-white-200 border-b-green-500 flex flex-row border
@@ -28,10 +30,10 @@ class Header extends Component {
             {email}
           </span>
           <span className="text-green-500 mr-2">
-            Despesa total:
+            Despesa total: R$
           </span>
           <span data-testid="total-field" className="text-green-500 mr-1">
-            R$ 0
+            {total}
           </span>
           <span data-testid="header-currency-field" className="text-green-500 mr-8">
             BRL
@@ -46,6 +48,9 @@ const mapStateToProps = (state) => (state);
 Header.propTypes = {
   user: PropTypes.shape({
     email: PropTypes.string.isRequired,
+  }).isRequired,
+  wallet: PropTypes.shape({
+    total: PropTypes.number.isRequired,
   }).isRequired,
 };
 

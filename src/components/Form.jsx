@@ -4,31 +4,23 @@ import { IoIosAddCircle } from 'react-icons/io';
 import { connect } from 'react-redux';
 import * as ACT from '../actions';
 
-const tesObj = {
-  id: 0,
-  value: '10',
-  currency: 'USD',
-  method: 'Cartão de crédito',
-  tag: 'Lazer',
-  description: 'Dez dólares',
-  exchangeRates: 'mockData',
-};
-
 class Form extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // id: 0 ,
+      id: 0,
       value: '',
       currency: '',
       method: '',
       tag: '',
       description: '',
-      // exchangeRates: {},
+      exchangeRates: {},
       currencies: [],
     };
     this.handleChange = this.handleChange.bind(this);
     this.getCurrencies = this.getCurrencies.bind(this);
+    // this.getExchangeRates = this.getExchangeRates.bind(this);
+    this.clearInput = this.clearInput.bind(this);
   }
 
   componentDidMount() {
@@ -44,18 +36,29 @@ class Form extends Component {
       });
   }
 
+  clearInput() {
+    this.setState({
+      value: '',
+      currency: '',
+      method: '',
+      tag: '',
+      description: '',
+      exchangeRates: {},
+    });
+  }
+
   handleChange(event) {
     const { value, id } = event.target;
     this.setState({ [id]: value });
-    console.log(id, value);
   }
 
   render() {
     // const { value, currency, method, tag, description,
     //   exchangeRates, addExpense } = this.props;
-    const { value, currency, method, tag, description, currencies } = this.state;
+    const { id, value, currency, method, tag, description, currencies,
+      exchangeRates } = this.state;
     const { addExpense } = this.props;
-    const { getCurrencies } = this;
+    const { clearInput } = this;
 
     return (
       <div
@@ -67,13 +70,13 @@ class Form extends Component {
           <span
             className="pl-6 pr-6 text-yellow-500 font-bold "
           >
-            Adicionar despesa
+            Adicionar gasto
           </span>
 
           <label
             className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0
             flex flex-row"
-            htmlFor="value-input"
+            htmlFor="value"
           >
             <input
               className="bg-gray-200 appearance-none border-2 border-gray-200
@@ -81,7 +84,7 @@ class Form extends Component {
                 focus:outline-none focus:bg-white focus:border-green-500"
               placeholder="valor"
               data-testid="value-input"
-              type="text"
+              type="number"
               id="value"
               value={ value }
               onChange={ this.handleChange }
@@ -91,7 +94,7 @@ class Form extends Component {
           <label
             className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0
             flex flex-row"
-            htmlFor="description-input"
+            htmlFor="description"
           >
             <span
               className="pr-6"
@@ -172,14 +175,23 @@ class Form extends Component {
             className="h-full "
             type="button"
             onClick={ () => {
-              // addExpense([{ expenses: { id: 'id', value: 'value', currency: 'currency' } }]);
-              addExpense(tesObj);
-              getCurrencies();
+              addExpense({
+                id,
+                value,
+                currency,
+                method,
+                tag,
+                description,
+                exchangeRates,
+              });
+              this.setState({ value: '' });
+              clearInput();
             } }
           >
             <IoIosAddCircle
               className="ml-4 text-4xl text-green-500  hover:text-green-700"
             />
+            Adicionar despesa
           </button>
 
         </form>
@@ -190,6 +202,8 @@ class Form extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
   addExpense: (payload) => dispatch(ACT.addExpense(payload)),
+  requestExchangeRates: () => dispatch(ACT.requestExchangeRates()),
+  fetchExchangeRates: (payload) => dispatch(ACT.fetchExchangeRates(payload)),
 });
 
 Form.propTypes = {
