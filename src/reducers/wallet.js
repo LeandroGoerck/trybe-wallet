@@ -25,7 +25,8 @@ const wallet = (state = INIT, action) => {
       total: 111,
     });
   case ACT.ADD_TOTAL_VALUE:
-    state.total = payload.toFixed(2);
+    // state.total = Number(payload.toFixed(2));
+    state.total = Number(payload);
     return { ...state };
   default:
     return state;
