@@ -9,8 +9,6 @@ class WalletTable extends React.Component {
   render() {
     const { wallet, delExpenseLine, calcTotalExpense } = this.props;
     const { expenses } = wallet;
-    // const { description, tag, method, value, currency } = expenses;
-    // console.log(expenses);
     return (
       <table className="table-auto border-collapse">
         <thead>

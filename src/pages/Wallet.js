@@ -4,14 +4,6 @@ import Header from '../components/Header';
 import WalletTable from '../components/WalletTable';
 
 class Wallet extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     expenses: [],
-  //     moedas: [],
-  //   };
-  // }
-
   render() {
     return (
       <div>

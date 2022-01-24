@@ -18,7 +18,7 @@ class Header extends Component {
     return (
       <div
         className="h-20 bg-white-200 border-b-green-500 flex flex-row border
-        items-center space-x-5 place-content-between"
+        items-center space-x-5 place-content-between mt-10"
       >
         <div
           className="text-4xl m-4 ml-8"

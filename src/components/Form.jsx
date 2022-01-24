@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { GiPayMoney } from 'react-icons/gi';
 import { connect } from 'react-redux';
 import * as ACT from '../actions';
 
@@ -18,7 +19,6 @@ class Form extends Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.getCurrencies = this.getCurrencies.bind(this);
-    // this.getExchangeRates = this.getExchangeRates.bind(this);
     this.clearInput = this.clearInput.bind(this);
   }
 
@@ -52,8 +52,6 @@ class Form extends Component {
   }
 
   render() {
-    // const { value, currency, method, tag, description,
-    //   exchangeRates, addExpense } = this.props;
     const { id, value, currency, method, tag, description, currencies,
       exchangeRates } = this.state;
     const { addExpense } = this.props;
@@ -64,12 +62,12 @@ class Form extends Component {
         className="h-20 bg-white-200 border-b-green-500 flex flex-row shadow-xl
         items-center space-x-5 place-content-between"
       >
-        <form className="w-full flex flex-row justify-evenly  ">
+        <form className="w-full flex flex-row justify-evenly ">
 
           <span
             className="pl-6 pr-6 text-yellow-500 font-bold "
           >
-            Adicionar gasto
+            <GiPayMoney className="h-12 w-12" />
           </span>
 
           <label
@@ -125,11 +123,6 @@ class Form extends Component {
             onChange={ this.handleChange }
           >
             {currencies.map((cur) => (<option key={ cur } value={ cur }>{cur}</option>))}
-            {/* <option value="BRL">BRL</option>
-            <option value="USD">USD</option>
-            <option value="ARS">ARS</option>
-            <option value="BTC">BTC</option>
-            <option value="ETH">ETH</option> */}
           </select>
 
           <select
@@ -172,7 +165,7 @@ class Form extends Component {
 
           <button
             className="h-min-10  bg-green-500  text-black rounded  opacity-80
-            hover:opacity-100 pr-2 pl-2"
+            hover:opacity-100 pr-2 pl-2 ml-4 mr-2"
             type="button"
             onClick={ () => {
               addExpense({
@@ -204,14 +197,6 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 Form.propTypes = {
-  // bbuttonDisable: PropTypes.bool.isRequired,
-  // value: PropTypes.number.isRequired,
-  // currency: PropTypes.string.isRequired,
-  // method: PropTypes.string.isRequired,
-  // tag: PropTypes.string.isRequired,
-  // description: PropTypes.string.isRequired,
-  // addExpense: PropTypes.func.isRequired,
-  // exchangeRates: PropTypes.string.isRequired,
   addExpense: PropTypes.func.isRequired,
 };
 
