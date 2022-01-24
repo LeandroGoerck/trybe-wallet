@@ -8,6 +8,8 @@ export const REQUEST_EXCHANGE_RATES = 'REQUEST_EXCHANGE_RATES';
 export const ADD_EXCHANGE_RATES = 'ADD_EXCHANGE_RATES';
 export const ADD_TOTAL_VALUE = 'ADD_TOTAL_VALUE';
 export const DEL_EXPENSE_LINE = 'DEL_EXPENSE_LINE';
+export const CHANGE_LINE = 'CHANGE_LINE';
+export const SELECT_LINE = 'SELECT_LINE';
 
 // action creators
 export const addEmail = (email) => ({ type: ADD_EMAIL, payload: email });
@@ -16,6 +18,8 @@ export const requestExchangeRates = () => ({ type: REQUEST_EXCHANGE_RATES });
 export const addExchangeRates = (payload) => ({ type: ADD_EXCHANGE_RATES, payload });
 export const addTotalValue = (payload) => ({ type: ADD_TOTAL_VALUE, payload });
 export const delExpenseLine = (payload) => ({ type: DEL_EXPENSE_LINE, payload });
+export const changeLine = (payload, index) => ({ type: CHANGE_LINE, payload, index });
+export const selectLine = (payload) => ({ type: SELECT_LINE, payload });
 
 // action creator que retorna uma função, possível por conta do pacote redux-thunk
 export const calcTotalExpense = () => async (dispatch, getState) => {
@@ -68,10 +72,24 @@ export function fetchExchangeRates() {
   };
 }
 
-// getExchangeRates() {
-//   fetch('https://economia.awesomeapi.com.br/json/all')
-//     .then((response) => response.json())
-//     .then((data) => {
-//       this.setState({ exchangeRates: data });
-//     });
-// }
+export function editExpenseLine(payload) {
+  return (dispatch) => { // thunk declarado
+    dispatch(requestExchangeRates());
+    return fetch('https://economia.awesomeapi.com.br/json/all')
+      .then((response) => response.json())
+      .then((data) => {
+        const { id, value, currency, method, tag, description } = payload;
+        const dataObj = {
+          id,
+          value,
+          description,
+          currency,
+          method,
+          tag,
+          exchangeRates: data,
+        };
+        // dispatch(addExchangeRates(dataObj));
+        dispatch(calcTotalExpense());
+      });
+  };
+}

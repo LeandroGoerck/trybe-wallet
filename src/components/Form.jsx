@@ -20,6 +20,7 @@ class Form extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.getCurrencies = this.getCurrencies.bind(this);
     this.clearInput = this.clearInput.bind(this);
+
   }
 
   componentDidMount() {
@@ -33,6 +34,22 @@ class Form extends Component {
         delete data.USDT;
         this.setState({ currencies: Object.keys(data) });
       });
+  }
+
+  buttonSelectedLine() {
+    const { wallet } = this.props;
+    const { selectedLine } = wallet;
+
+    if (selectedLine >= 0) {
+      this.setState({
+        id: wallet.expenses[selectedLine].id,
+        value: wallet.expenses[selectedLine].value,
+        currency: wallet.expenses[selectedLine].currency,
+        method: wallet.expenses[selectedLine].method,
+        tag: wallet.expenses[selectedLine].tag,
+        description: wallet.expenses[selectedLine].description,
+      });
+    }
   }
 
   clearInput() {
@@ -54,16 +71,21 @@ class Form extends Component {
   render() {
     const { id, value, currency, method, tag, description, currencies,
       exchangeRates } = this.state;
-    const { addExpense } = this.props;
+    const { wallet, addExpense } = this.props;
     const { clearInput } = this;
+    const { selectedLine } = wallet;
 
     return (
       <div
-        className="h-20 bg-white-200 border-b-green-500 flex flex-row shadow-xl
-        items-center space-x-5 place-content-between"
+        className={ selectedLine >= 0
+          ? `h-20 bg-yellow-100 border-b-green-500 flex flex-row shadow-xl
+          items-center space-x-5 `
+          : `h-20 bg-white border-b-green-500 flex flex-row shadow-xl
+          items-center space-x-5` }
       >
-        <form className="w-full flex flex-row justify-evenly ">
-
+        <form
+          className="w-full flex flex-row justify-evenly"
+        >
           <span
             className="pl-6 pr-6 text-yellow-500 font-bold "
           >
@@ -164,11 +186,14 @@ class Form extends Component {
           </select>
 
           <button
-            className="h-min-10  bg-green-500  text-black rounded  opacity-80
-            hover:opacity-100 pr-2 pl-2 ml-4 mr-2"
+            className={ selectedLine >= 0
+              ? `h-min-10  bg-yellow-500  text-black rounded  opacity-80
+              hover:opacity-100 pr-2 pl-2 ml-4 mr-2`
+              : `h-min-10  bg-green-500  text-black rounded  opacity-80
+              hover:opacity-100 pr-2 pl-2 ml-4 mr-2` }
             type="button"
             onClick={ () => {
-              addExpense({
+              const expenseObj = {
                 id,
                 value,
                 currency,
@@ -176,12 +201,13 @@ class Form extends Component {
                 tag,
                 description,
                 exchangeRates,
-              });
+              };
+              addExpense(expenseObj);
               this.setState({ value: '' });
               clearInput();
             } }
           >
-            Adicionar despesa
+            {selectedLine >= 0 ? 'Editar despesa' : 'Adicionar despesa'}
           </button>
 
         </form>
@@ -190,6 +216,8 @@ class Form extends Component {
   }
 }
 
+const mapStateToProps = (state) => state;
+
 const mapDispatchToProps = (dispatch) => ({
   addExpense: (payload) => dispatch(ACT.addExpense(payload)),
   requestExchangeRates: () => dispatch(ACT.requestExchangeRates()),
@@ -197,7 +225,12 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 Form.propTypes = {
+  wallet: PropTypes.shape({
+    total: PropTypes.number.isRequired,
+    expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+    selectedLine: PropTypes.number.isRequired,
+  }).isRequired,
   addExpense: PropTypes.func.isRequired,
 };
 
-export default connect(null, mapDispatchToProps)(Form);
+export default connect(mapStateToProps, mapDispatchToProps)(Form);
