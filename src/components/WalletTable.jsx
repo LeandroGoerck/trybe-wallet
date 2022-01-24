@@ -1,13 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { MdDelete } from 'react-icons/md';
+import { AiFillEdit } from 'react-icons/ai';
+import * as ACT from '../actions';
 
 class WalletTable extends React.Component {
   render() {
-    const { wallet } = this.props;
+    const { wallet, delExpenseLine, calcTotalExpense } = this.props;
     const { expenses } = wallet;
     // const { description, tag, method, value, currency } = expenses;
-    console.log(expenses);
+    // console.log(expenses);
     return (
       <table className="table-auto border-collapse">
         <thead>
@@ -53,7 +56,36 @@ class WalletTable extends React.Component {
                 <td className="border-b border-slate-300">{exchangeAsk.toFixed(2)}</td>
                 <td className="border-b border-slate-300">{convertedValue.toFixed(2)}</td>
                 <td className="border-b border-slate-300">Real</td>
-                <td className="border-b border-slate-300">9</td>
+                <td className="border-b border-slate-300">
+                  <button
+                    className="bg-yellow-500 font-bold py-2 px-4 rounded
+                    opacity-50 hover:opacity-100"
+                    data-testid="edit-btn"
+                    onClick={ () => {
+                      delExpenseLine(index);
+                      calcTotalExpense();
+                    } }
+                    type="button"
+                  >
+                    <AiFillEdit
+                      className="text-white"
+                    />
+                  </button>
+                  <button
+                    className="bg-red-500 text-white font-bold py-2 px-4 rounded
+                    opacity-50 hover:opacity-100 ml-4 "
+                    data-testid="delete-btn"
+                    onClick={ () => {
+                      delExpenseLine(index);
+                      calcTotalExpense();
+                    } }
+                    type="button"
+                  >
+                    <MdDelete
+                      className="text-white"
+                    />
+                  </button>
+                </td>
               </tr>
             </tbody>
           );
@@ -65,20 +97,18 @@ class WalletTable extends React.Component {
 
 const mapStateToProps = (state) => state;
 
+const mapDispatchToProps = (dispatch) => ({
+  delExpenseLine: (payload) => dispatch(ACT.delExpenseLine(payload)),
+  calcTotalExpense: () => dispatch(ACT.calcTotalExpense()),
+});
+
 WalletTable.propTypes = {
   wallet: PropTypes.shape({
     total: PropTypes.number.isRequired,
-    expenses: PropTypes.shape({
-      map: PropTypes.func.isRequired,
-      length: PropTypes.number.isRequired,
-      description: PropTypes.string.isRequired,
-      tag: PropTypes.string.isRequired,
-      method: PropTypes.string.isRequired,
-      value: PropTypes.string.isRequired,
-      currency: PropTypes.string.isRequired,
-    }).isRequired,
+    expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
   }).isRequired,
-
+  delExpenseLine: PropTypes.func.isRequired,
+  calcTotalExpense: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, null)(WalletTable);
+export default connect(mapStateToProps, mapDispatchToProps)(WalletTable);

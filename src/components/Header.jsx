@@ -1,13 +1,20 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import * as ACT from '../actions';
 
 class Header extends Component {
+  componentDidMount() {
+    const { calcTotalExpense } = this.props;
+    calcTotalExpense();
+  }
+
   render() {
     const { user } = this.props;
     const { email } = user;
     const { wallet } = this.props;
-    const { total } = wallet;
+    const { total = '187.12' } = wallet;
+    const displayTotal = Math.round(Number(total) * 100) / 100;
     return (
       <div
         className="h-20 bg-white-200 border-b-green-500 flex flex-row border
@@ -33,7 +40,7 @@ class Header extends Component {
             Despesa total: R$
           </span>
           <span data-testid="total-field" className="text-green-500 mr-1">
-            {total}
+            {displayTotal}
           </span>
           <span data-testid="header-currency-field" className="text-green-500 mr-8">
             BRL
@@ -45,6 +52,10 @@ class Header extends Component {
 }
 const mapStateToProps = (state) => (state);
 
+const mapDispatchToProps = (dispatch) => ({
+  calcTotalExpense: () => dispatch(ACT.calcTotalExpense()),
+});
+
 Header.propTypes = {
   user: PropTypes.shape({
     email: PropTypes.string.isRequired,
@@ -52,6 +63,7 @@ Header.propTypes = {
   wallet: PropTypes.shape({
     total: PropTypes.number.isRequired,
   }).isRequired,
+  calcTotalExpense: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

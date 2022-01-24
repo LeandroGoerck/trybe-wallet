@@ -7,6 +7,7 @@ export const GET_CURRENCIES = 'GET_CURRENCIES';
 export const REQUEST_EXCHANGE_RATES = 'REQUEST_EXCHANGE_RATES';
 export const ADD_EXCHANGE_RATES = 'ADD_EXCHANGE_RATES';
 export const ADD_TOTAL_VALUE = 'ADD_TOTAL_VALUE';
+export const DEL_EXPENSE_LINE = 'DEL_EXPENSE_LINE';
 
 // action creators
 export const addEmail = (email) => ({ type: ADD_EMAIL, payload: email });
@@ -14,6 +15,7 @@ export const getCurrencies = () => ({ type: GET_CURRENCIES });
 export const requestExchangeRates = () => ({ type: REQUEST_EXCHANGE_RATES });
 export const addExchangeRates = (payload) => ({ type: ADD_EXCHANGE_RATES, payload });
 export const addTotalValue = (payload) => ({ type: ADD_TOTAL_VALUE, payload });
+export const delExpenseLine = (payload) => ({ type: DEL_EXPENSE_LINE, payload });
 
 // action creator que retorna uma função, possível por conta do pacote redux-thunk
 export const calcTotalExpense = () => async (dispatch, getState) => {

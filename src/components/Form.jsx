@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { IoIosAddCircle } from 'react-icons/io';
 import { connect } from 'react-redux';
 import * as ACT from '../actions';
 
@@ -65,7 +64,7 @@ class Form extends Component {
         className="h-20 bg-white-200 border-b-green-500 flex flex-row shadow-xl
         items-center space-x-5 place-content-between"
       >
-        <form className="w-full flex flex-row justify-evenly">
+        <form className="w-full flex flex-row justify-evenly  ">
 
           <span
             className="pl-6 pr-6 text-yellow-500 font-bold "
@@ -172,7 +171,8 @@ class Form extends Component {
           </select>
 
           <button
-            className="h-full "
+            className="h-min-10  bg-green-500  text-black rounded  opacity-80
+            hover:opacity-100 pr-2 pl-2"
             type="button"
             onClick={ () => {
               addExpense({
@@ -188,9 +188,6 @@ class Form extends Component {
               clearInput();
             } }
           >
-            <IoIosAddCircle
-              className="ml-4 text-4xl text-green-500  hover:text-green-700"
-            />
             Adicionar despesa
           </button>
 
