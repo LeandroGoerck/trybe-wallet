@@ -21,6 +21,8 @@ export const delExpenseLine = (payload) => ({ type: DEL_EXPENSE_LINE, payload })
 export const changeLine = (payload, index) => ({ type: CHANGE_LINE, payload, index });
 export const selectLine = (payload) => ({ type: SELECT_LINE, payload });
 
+const ECONO_URL = 'https://economia.awesomeapi.com.br/json/all';
+
 // action creator que retorna uma função, possível por conta do pacote redux-thunk
 export const calcTotalExpense = () => async (dispatch, getState) => {
   const state = getState();
@@ -43,7 +45,7 @@ export const calcTotalExpense = () => async (dispatch, getState) => {
 export function addExpense(payload) {
   return (dispatch) => { // thunk declarado
     dispatch(requestExchangeRates());
-    return fetch('https://economia.awesomeapi.com.br/json/all')
+    return fetch(ECONO_URL)
       .then((response) => response.json())
       .then((data) => {
         const { id, value, currency, method, tag, description } = payload;
@@ -66,16 +68,17 @@ export function addExpense(payload) {
 export function fetchExchangeRates() {
   return (dispatch) => { // thunk declarado
     dispatch(requestExchangeRates());
-    return fetch('https://economia.awesomeapi.com.br/json/all')
+    return fetch(ECONO_URL)
       .then((response) => response.json())
       .then((data) => (data));
   };
 }
 
 export function editExpenseLine(payload) {
-  return (dispatch) => { // thunk declarado
+  return (dispatch, getState) => { // thunk declarado
+    const { selectedLine } = getState().wallet;
     dispatch(requestExchangeRates());
-    return fetch('https://economia.awesomeapi.com.br/json/all')
+    return fetch(ECONO_URL)
       .then((response) => response.json())
       .then((data) => {
         const { id, value, currency, method, tag, description } = payload;
@@ -88,7 +91,7 @@ export function editExpenseLine(payload) {
           tag,
           exchangeRates: data,
         };
-        // dispatch(addExchangeRates(dataObj));
+        dispatch(changeLine(dataObj, selectedLine));
         dispatch(calcTotalExpense());
       });
   };

@@ -64,6 +64,11 @@ const wallet = (state = INIT, action) => {
     state.selectedLine = Number(payload);
     return { ...state };
 
+  case ACT.CHANGE_LINE:
+    state.expenses[action.index] = payload;
+    state.selectedLine = -1;
+    return { ...state };
+
   default:
     return state;
   }

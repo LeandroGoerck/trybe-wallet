@@ -20,7 +20,6 @@ class Form extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.getCurrencies = this.getCurrencies.bind(this);
     this.clearInput = this.clearInput.bind(this);
-
   }
 
   componentDidMount() {
@@ -71,7 +70,7 @@ class Form extends Component {
   render() {
     const { id, value, currency, method, tag, description, currencies,
       exchangeRates } = this.state;
-    const { wallet, addExpense } = this.props;
+    const { wallet, addExpense, editExpenseLine } = this.props;
     const { clearInput } = this;
     const { selectedLine } = wallet;
 
@@ -202,7 +201,11 @@ class Form extends Component {
                 description,
                 exchangeRates,
               };
-              addExpense(expenseObj);
+              if (selectedLine >= 0) {
+                editExpenseLine(expenseObj);
+              } else {
+                addExpense(expenseObj);
+              }
               this.setState({ value: '' });
               clearInput();
             } }
@@ -222,6 +225,7 @@ const mapDispatchToProps = (dispatch) => ({
   addExpense: (payload) => dispatch(ACT.addExpense(payload)),
   requestExchangeRates: () => dispatch(ACT.requestExchangeRates()),
   fetchExchangeRates: (payload) => dispatch(ACT.fetchExchangeRates(payload)),
+  editExpenseLine: (payload) => dispatch(ACT.editExpenseLine(payload)),
 });
 
 Form.propTypes = {
@@ -231,6 +235,7 @@ Form.propTypes = {
     selectedLine: PropTypes.number.isRequired,
   }).isRequired,
   addExpense: PropTypes.func.isRequired,
+  editExpenseLine: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form);
