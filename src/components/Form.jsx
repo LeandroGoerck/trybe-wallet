@@ -4,6 +4,9 @@ import { GiPayMoney } from 'react-icons/gi';
 import { connect } from 'react-redux';
 import * as ACT from '../actions';
 
+const methodOptions = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
+const tagOptions = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
+
 class Form extends Component {
   constructor(props) {
     super(props);
@@ -11,8 +14,8 @@ class Form extends Component {
       id: 0,
       value: '',
       currency: '',
-      method: '',
-      tag: '',
+      method: methodOptions[0],
+      tag: tagOptions[0],
       description: '',
       exchangeRates: {},
       currencies: [],
@@ -31,7 +34,8 @@ class Form extends Component {
       .then((response) => response.json())
       .then((data) => {
         delete data.USDT;
-        this.setState({ currencies: Object.keys(data) });
+        const currencyOptions = Object.keys(data);
+        this.setState({ currencies: currencyOptions, currency: currencyOptions[0] });
       });
   }
 
@@ -52,11 +56,12 @@ class Form extends Component {
   }
 
   clearInput() {
+    const { currencies } = this.state;
     this.setState({
       value: '',
-      currency: '',
-      method: '',
-      tag: '',
+      currency: currencies[0],
+      method: methodOptions[0],
+      tag: tagOptions[0],
       description: '',
       exchangeRates: {},
     });
@@ -67,11 +72,19 @@ class Form extends Component {
     this.setState({ [id]: value });
   }
 
+  renderOptions(optionsArray) {
+    return (optionsArray.map((option, index) => (
+      <option key={ index } value={ option }>
+        {option}
+      </option>
+    )));
+  }
+
   render() {
     const { id, value, currency, method, tag, description, currencies,
       exchangeRates } = this.state;
     const { wallet, addExpense, editExpenseLine } = this.props;
-    const { clearInput } = this;
+    const { clearInput, renderOptions } = this;
     const { selectedLine } = wallet;
 
     return (
@@ -143,7 +156,7 @@ class Form extends Component {
             value={ currency }
             onChange={ this.handleChange }
           >
-            {currencies.map((cur) => (<option key={ cur } value={ cur }>{cur}</option>))}
+            {renderOptions(currencies)}
           </select>
 
           <select
@@ -159,9 +172,8 @@ class Form extends Component {
             value={ method }
             onChange={ this.handleChange }
           >
-            <option value="Dinheiro">Dinheiro</option>
-            <option value="Cartão de crédito">Cartão de crédito</option>
-            <option value="Cartão de débito">Cartão de débito</option>
+            {renderOptions(methodOptions)}
+
           </select>
 
           <select
@@ -177,11 +189,7 @@ class Form extends Component {
             value={ tag }
             onChange={ this.handleChange }
           >
-            <option defaultValue="Alimentação" value="Alimentação">Alimentação</option>
-            <option value="Lazer">Lazer</option>
-            <option value="Trabalho">Trabalho</option>
-            <option value="Transporte">Transporte</option>
-            <option value="Saúde">Saúde</option>
+            {renderOptions(tagOptions)}
           </select>
 
           <button
