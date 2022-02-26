@@ -69,6 +69,10 @@ const wallet = (state = INIT, action) => {
     state.selectedLine = -1;
     return { ...state };
 
+  case ACT.UPDATE_FORM:
+    state.updateForm = payload;
+    return { ...state };
+
   default:
     return state;
   }

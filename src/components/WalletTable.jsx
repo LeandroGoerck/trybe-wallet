@@ -7,7 +7,7 @@ import * as ACT from '../actions';
 
 class WalletTable extends React.Component {
   render() {
-    const { wallet, delExpenseLine, calcTotalExpense, selectLine } = this.props;
+    const { wallet, delExpenseLine, calcTotalExpense, selectLine, updateForm } = this.props;
     const { expenses, selectedLine } = wallet;
     return (
       <table className="table-auto border-collapse">
@@ -59,6 +59,7 @@ class WalletTable extends React.Component {
                     data-testid="edit-btn"
                     onClick={ () => {
                       selectLine(index);
+                      updateForm(true);
                     } }
                     type="button"
                   >
@@ -96,6 +97,7 @@ const mapDispatchToProps = (dispatch) => ({
   delExpenseLine: (payload) => dispatch(ACT.delExpenseLine(payload)),
   calcTotalExpense: () => dispatch(ACT.calcTotalExpense()),
   selectLine: (lineIndex) => dispatch(ACT.selectLine(lineIndex)),
+  updateForm: (payload) => dispatch(ACT.updateForm(payload)),
 });
 
 WalletTable.propTypes = {
@@ -107,6 +109,7 @@ WalletTable.propTypes = {
   delExpenseLine: PropTypes.func.isRequired,
   calcTotalExpense: PropTypes.func.isRequired,
   selectLine: PropTypes.func.isRequired,
+  updateForm: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(WalletTable);

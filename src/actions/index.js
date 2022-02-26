@@ -10,6 +10,7 @@ export const ADD_TOTAL_VALUE = 'ADD_TOTAL_VALUE';
 export const DEL_EXPENSE_LINE = 'DEL_EXPENSE_LINE';
 export const CHANGE_LINE = 'CHANGE_LINE';
 export const SELECT_LINE = 'SELECT_LINE';
+export const UPDATE_FORM = 'UPDATE_FORM';
 
 // action creators
 export const addEmail = (email) => ({ type: ADD_EMAIL, payload: email });
@@ -20,6 +21,7 @@ export const addTotalValue = (payload) => ({ type: ADD_TOTAL_VALUE, payload });
 export const delExpenseLine = (payload) => ({ type: DEL_EXPENSE_LINE, payload });
 export const changeLine = (payload, index) => ({ type: CHANGE_LINE, payload, index });
 export const selectLine = (payload) => ({ type: SELECT_LINE, payload });
+export const updateForm = (payload) => ({ type: UPDATE_FORM, payload });
 
 const ECONO_URL = 'https://economia.awesomeapi.com.br/json/all';
 

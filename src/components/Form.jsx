@@ -23,10 +23,20 @@ class Form extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.getCurrencies = this.getCurrencies.bind(this);
     this.clearInput = this.clearInput.bind(this);
+    this.buttonSelectedLine = this.buttonSelectedLine.bind(this);
   }
 
   componentDidMount() {
     this.getCurrencies();
+  }
+
+  componentDidUpdate() {
+    const { buttonSelectedLine } = this;
+    const { wallet, updateForm } = this.props;
+    if (wallet.updateForm === true) {
+      buttonSelectedLine();
+      updateForm(false);
+    }
   }
 
   getCurrencies() {
@@ -234,16 +244,19 @@ const mapDispatchToProps = (dispatch) => ({
   requestExchangeRates: () => dispatch(ACT.requestExchangeRates()),
   fetchExchangeRates: (payload) => dispatch(ACT.fetchExchangeRates(payload)),
   editExpenseLine: (payload) => dispatch(ACT.editExpenseLine(payload)),
+  updateForm: (payload) => dispatch(ACT.updateForm(payload)),
 });
 
 Form.propTypes = {
-  wallet: PropTypes.shape({
-    total: PropTypes.number.isRequired,
-    expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
-    selectedLine: PropTypes.number.isRequired,
-  }).isRequired,
   addExpense: PropTypes.func.isRequired,
   editExpenseLine: PropTypes.func.isRequired,
+  updateForm: PropTypes.func.isRequired,
+  wallet: PropTypes.shape({
+    expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+    selectedLine: PropTypes.number.isRequired,
+    total: PropTypes.number.isRequired,
+    updateForm: PropTypes.bool,
+  }).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form);
