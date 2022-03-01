@@ -21,7 +21,7 @@
     "stylelint-order": "4.1.0"
   },
   "scripts": {
-    "predeploy": "npm tun buld",
+    "predeploy": "npm run buld",
     "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
