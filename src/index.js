@@ -8,7 +8,7 @@ import store from './store';
 
 ReactDOM.render(
     <Provider store={ store }>
-     <BrowserRouter basename="/repo-name" >
+     <BrowserRouter basename="/trybe-wallet" >
         <App  />
       </BrowserRouter>
     </Provider>,
