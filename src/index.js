@@ -11,7 +11,7 @@ import Wallet from './pages/Wallet';
 ReactDOM.render(
     <Provider store={ store }>
       <HashRouter>
-        <Wallet />
+        <App  />
       </HashRouter>
     </Provider>,
   document.getElementById('root'),
