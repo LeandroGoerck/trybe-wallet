@@ -6,7 +6,7 @@ TrybeWallet é uma aplicação de carteira que consome a API de cotação de moe
 Clone o repositório:
 
 ```
-git clone git@github.com/LeandroGoerck/trybe-wallet
+git clone git@github.com/LeandroGoerck/trybe-wallet.git
 ```
 
 Acesse a pasta do repositório
