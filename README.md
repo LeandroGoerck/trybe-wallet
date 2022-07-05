@@ -1,4 +1,4 @@
-# :briefcase:TrybeWallet:briefcase:
+# :briefcase: Trybe Wallet :briefcase:
 TrybeWallet é uma aplicação de carteira que consome a API de cotação de moedas e registra / converte transações utilizando estado global da aplicação com _Redux_.
 
 ## 💻 Instalando o projeto
